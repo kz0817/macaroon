@@ -228,6 +228,11 @@ function setupControlEvents()
 
   $("#player").on("canplay", clearLoadingIcon);
 
+  $("#player").on("error", function(e) {
+    appendAlert("Video Player: Error occured.");
+    clearLoadingIcon();
+  });
+
   $("body").click(function(event) {
     if (event.eventPhase != Event.AT_TARGET)
       return;
