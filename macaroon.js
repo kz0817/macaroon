@@ -62,11 +62,22 @@ function fixupContentsUrl(url)
   return context.contentsDir + "/" + url;
 }
 
+function setLoadingIcon()
+{
+  $("#loading-icon").show();
+}
+
+function clearLoadingIcon()
+{
+  $("#loading-icon").hide();
+}
+
 function loadVideo(url)
 {
   var fixedUrl = fixupContentsUrl(url)
   var player = document.getElementById("player");
   player.src = fixedUrl;
+  setLoadingIcon();
 }
 
 function getPlayTime()
@@ -79,6 +90,7 @@ function setPlayTime(time)
 {
   var player = $("#player");
   player.get(0).currentTime = time;
+  setLoadingIcon();
 }
 
 function setPlayerSizeLabel(label)
@@ -213,6 +225,8 @@ function setupControlEvents()
   $("#player").click(function(event) {
     raisePlayer(false);
   });
+
+  $("#player").on("canplay", clearLoadingIcon);
 
   $("body").click(function(event) {
     if (event.eventPhase != Event.AT_TARGET)
