@@ -1,0 +1,19 @@
+video {
+  width: 320px;
+  height: 180px;
+  background-color: #000000;
+  margin: 0px;
+  z-index: -100;
+  left: 0px;
+  top: 0px;
+}
+
+body {
+  color: #000000;
+  background-color: #d0d0d0;
+  text-align: center;
+}
+
+.content-list {
+  margin: 5px 10px;
+}

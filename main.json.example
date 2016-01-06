@@ -1,0 +1,35 @@
+[{
+  "label": "Title 1",
+  "media": [{
+    "codec": "H.264 1440x1080 30p High L4.1 5.6M, AAC 160k, mp4",
+    "url": "title1.mp4"
+  }],
+  "chapters": [{
+    "label": "chaper 1", "time": "00:00:03"
+  }, {
+    "label": "chapter 2", "time": "00:04:15"
+  }, {
+    "label": "chapter3", "time": "00:07:18"
+  }]
+}, {
+  "label": "Music Video 2015",
+  "media": [{
+    "codec": "H.264 1440x1080 30p High L4.1 7.4M, AAC 160k, mp4",
+    "url": "abc.mp4"
+  }, {
+    "codec": "H.264 640x360 30p High L3.0 1.2M, AAC 160k, mp4",
+    "url": "foolish.mp4"
+  }, {
+    "codec": "H.264 192x144 15p High L1.1 164k, AAC 96k, mp4",
+    "url": "book.mp4"
+  }],
+  "chapters": [{
+    "label": "Overall", "time": "00:00:32"
+  }, {
+    "label": "book book book", "time": "00:01:45"
+  }, {
+    "label": "dog is an animal.", "time": "00:05:38"
+  }, {
+    "label": "Fire!", "time": "00:08:27"
+  }]
+}]

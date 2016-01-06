@@ -1,0 +1,85 @@
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+
+<!-- Bootstrap -->
+<link rel="stylesheet" href="external/bootstrap-3.3.6/css/bootstrap.min.css">
+
+<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+  <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+<link rel="stylesheet" href="macaroon.css">
+
+<script src="external/jquery-2.1.4.min.js"></script>
+<script src="external/bootstrap-3.3.6/js/bootstrap.min.js"></script>
+<script src="macaroon.js"></script>
+
+</head>
+<body>
+<div id="alert-region"></div>
+<div class="btn-group">
+  <button type="button" class="btn btn-default" id="raise-player-button">Raise Player</button>
+  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="player-size-button">
+  Display resolution <span class="caret"></span>
+  </button>
+  <ul class="dropdown-menu">
+    <li><a class="player-size">320x180</a></li>
+    <li><a class="player-size">640x360</a></li>
+    <li><a class="player-size">960x540</a></li>
+    <li><a class="player-size">1280x720</a></li>
+    <li><a class="player-size">Fit</a></li>
+  </ul>
+</div>
+
+<div class="btn-group">
+  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="codec-button">
+  Codec <span class="caret"></span>
+  </button>
+  <ul class="dropdown-menu" id="codec-menu"></ul>
+</div>
+<br>
+
+<div class="btn-group" role="group" id="rew-button-group"></div>
+<div class="btn-group" role="group" id="ff-button-group"></div>
+<br>
+
+<video id="player" controls autoplay></video>
+<br>
+
+<div class="panel panel-default content-list">
+  <div class="panel-heading" role="tab" id="title-list-heading">
+    <h4 class="panel-title">
+      <a role="button" data-toggle="collapse" data-parent="#accordion" href="#title-list-collapse" aria-expanded="true" aria-controls="title-list-collapse">
+        Title List
+      </a>
+    </h4>
+  </div>
+  <div id="title-list-collapse" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="title-list-heading">
+    <div class="panel-body" id="title-list">
+    </div>
+  </div>
+</div>
+
+<div class="panel panel-default content-list">
+  <div class="panel-heading" role="tab" id="chapter-list-heading">
+    <h4 class="panel-title">
+      <a role="button" data-toggle="collapse" data-parent="#accordion" href="#chapter-list-collapse" aria-expanded="true" aria-controls="chapter-list-collapse">
+        Chapter List
+      </a>
+    </h4>
+  </div>
+  <div id="chapter-list-collapse" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="chapter-list-heading">
+    <div class="panel-body" id="chapter-list">
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
