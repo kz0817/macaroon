@@ -62,14 +62,27 @@ function fixupContentsUrl(url)
   return context.contentsDir + "/" + url;
 }
 
+function isPlayerPaused()
+{
+  return $("#player").get(0).paused;
+}
+
+function fixupPlayButtonLabel()
+{
+  var label = {"false": "Pause", "true": "Play"}[isPlayerPaused()];
+  $("#play-button").text(label);
+}
+
 function setLoadingIcon()
 {
   $("#loading-icon").show();
+  $("#play-button").prop("disabled", true);
 }
 
 function clearLoadingIcon()
 {
   $("#loading-icon").hide();
+  $("#play-button").prop("disabled", false);
 }
 
 function loadVideo(url)
@@ -226,11 +239,22 @@ function setupControlEvents()
     raisePlayer(false);
   });
 
-  $("#player").on("canplay", clearLoadingIcon);
+  $("#player").on("canplay", function() {
+    clearLoadingIcon();
+    fixupPlayButtonLabel();
+  });
 
   $("#player").on("error", function(e) {
     appendAlert("Video Player: Error occured.");
     clearLoadingIcon();
+  });
+
+  $("#play-button").click(function() {
+    if (isPlayerPaused())
+      $("#player").get(0).play();
+    else
+      $("#player").get(0).pause();
+    fixupPlayButtonLabel();
   });
 
   $("body").click(function(event) {
