@@ -23,6 +23,12 @@ function setItemToLocalStorage(key, value)
   localStorage.setItem(key, value);
 }
 
+function codecDescrKey(content)
+{
+  var a = "codecDescr__" + content.label;
+  return "codecDescr__" + content.label;
+}
+
 function appendAlert(msg)
 {
   var alertDiv = $("<div>");
@@ -152,8 +158,10 @@ function setCodecMenu(mediaArray)
   $(".codec-item").click(function(event) {
     event.preventDefault();
     var mediaIndex = $(this).attr("data-media-index");
-    var media = context.contents[context.contentsIndex].media[mediaIndex];
+    var content = context.contents[context.contentsIndex];
+    var media = content.media[mediaIndex];
     setCodecLabel(media.codec);
+    setItemToLocalStorage(codecDescrKey(content), media.codec)
     var currTime = getPlayTime()
     loadVideo(media.url);
     setPlayTime(currTime)
@@ -264,6 +272,20 @@ function setupControlEvents()
   });
 }
 
+function getMediaIndex(content)
+{
+  var defaultIdx = 0;
+  var codecDescr = getItemFromLocalStorage(codecDescrKey(content));
+  if (!codecDescr)
+    return defaultIdx;
+
+  for (var i = 0; i < content.media.length; i++) {
+    if (content.media[i].codec == codecDescr)
+        return i;
+  }
+  return defaultIdx;
+}
+
 function setupContentsList()
 {
   for (var i = 0; i < context.contents.length; i++) {
@@ -278,7 +300,8 @@ function setupContentsList()
         var idx = $(this).attr("data-content-index");
         context.contentsIndex = idx;
         var content = context.contents[idx];
-        var media = content.media[0];
+        var mediaIndex = getMediaIndex(content);
+        var media = content.media[mediaIndex];
         loadVideo(media.url);
         setCodecLabel(media.codec);
         setCodecMenu(content.media);
