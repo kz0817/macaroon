@@ -27,7 +27,6 @@ function setItemToLocalStorage(key, value)
 
 function codecDescrKey(content)
 {
-  var a = "codecDescr__" + content.label;
   return "codecDescr__" + content.label;
 }
 
