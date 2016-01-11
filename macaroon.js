@@ -263,6 +263,10 @@ function setupControlEvents()
     fixupPlayButtonLabel();
   });
 
+  $("#player").on("seeked", function() {
+    clearLoadingIcon();
+  });
+
   $("#player").on("error", function(e) {
     appendAlert("Video Player: Error occured.");
     clearLoadingIcon();
