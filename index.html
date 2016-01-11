@@ -46,6 +46,11 @@
   </button>
   <ul class="dropdown-menu" id="codec-menu"></ul>
 </div>
+
+<div class="btn-group">
+  <button type="button" class="btn btn-default" id="title-ctrl">Title</button>
+  <button type="button" class="btn btn-default" id="chapter-ctrl">Chapter</button>
+</div>
 <br>
 
 <div class="btn-group" role="group" id="rew-button-group"></div>
@@ -55,7 +60,7 @@
 <video id="player" controls autoplay></video>
 <br>
 
-<div class="panel panel-default content-list">
+<div class="panel panel-default content-list" id="title-list-panel">
   <div class="panel-heading" role="tab" id="title-list-heading">
     <h4 class="panel-title">
       <a role="button" data-toggle="collapse" data-parent="#accordion" href="#title-list-collapse" aria-expanded="true" aria-controls="title-list-collapse">
@@ -69,7 +74,7 @@
   </div>
 </div>
 
-<div class="panel panel-default content-list">
+<div class="panel panel-default content-list" id="chapter-list-panel">
   <div class="panel-heading" role="tab" id="chapter-list-heading">
     <h4 class="panel-title">
       <a role="button" data-toggle="collapse" data-parent="#accordion" href="#chapter-list-collapse" aria-expanded="true" aria-controls="chapter-list-collapse">

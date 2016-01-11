@@ -2,6 +2,8 @@ var context = {
   contents: null,
   contentsDir: "contents",
   contentsIndex: 0,
+  titleListVisibility: true,
+  chapterListVisibility: true,
 };
 
 function toSecond(timeString)
@@ -27,6 +29,16 @@ function codecDescrKey(content)
 {
   var a = "codecDescr__" + content.label;
   return "codecDescr__" + content.label;
+}
+
+function toggleVisibility(elementId, flagKey)
+{
+  var visible = context[flagKey];
+  if (visible)
+    $("#" + elementId).hide();
+  else
+    $("#" + elementId).show();
+  context[flagKey] = !visible;
 }
 
 function appendAlert(msg)
@@ -269,6 +281,14 @@ function setupControlEvents()
     if (event.eventPhase != Event.AT_TARGET)
       return;
     raisePlayer(!isPlayerRaised());
+  });
+
+  $("#title-ctrl").click(function() {
+    toggleVisibility("title-list-panel", "titleListVisibility");
+  });
+
+  $("#chapter-ctrl").click(function() {
+    toggleVisibility("chapter-list-panel", "chapterListVisibility");
   });
 }
 
