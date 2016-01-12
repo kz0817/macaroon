@@ -30,13 +30,16 @@ function codecDescrKey(content)
   return "codecDescr__" + content.label;
 }
 
-function toggleVisibility(elementId, flagKey)
+function toggleVisibility(elementId, flagKey, ctrlButton)
 {
   var visible = context[flagKey];
-  if (visible)
+  if (visible) {
     $("#" + elementId).hide();
-  else
+    $(ctrlButton).removeClass("active");
+  } else {
     $("#" + elementId).show();
+    $(ctrlButton).addClass("active");
+  }
   context[flagKey] = !visible;
 }
 
@@ -287,11 +290,11 @@ function setupControlEvents()
   });
 
   $("#title-ctrl").click(function() {
-    toggleVisibility("title-list-panel", "titleListVisibility");
+    toggleVisibility("title-list-panel", "titleListVisibility", this);
   });
 
   $("#chapter-ctrl").click(function() {
-    toggleVisibility("chapter-list-panel", "chapterListVisibility");
+    toggleVisibility("chapter-list-panel", "chapterListVisibility", this);
   });
 }
 
