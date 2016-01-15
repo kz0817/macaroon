@@ -4,6 +4,7 @@ var context = {
   contentsIndex: 0,
   titleListVisibility: true,
   chapterListVisibility: true,
+  contentUrlVisibility: false,
 };
 
 function toSecond(timeString)
@@ -108,6 +109,7 @@ function clearLoadingIcon()
 function loadVideo(url)
 {
   var fixedUrl = fixupContentsUrl(url)
+  $("#content-url").text(location.href + fixedUrl);
   var player = document.getElementById("player");
   player.src = fixedUrl;
   setLoadingIcon();
@@ -296,6 +298,11 @@ function setupControlEvents()
   $("#chapter-ctrl").click(function() {
     toggleVisibility("chapter-list-panel", "chapterListVisibility", this);
   });
+
+  $("#content-url-ctrl").click(function() {
+    toggleVisibility("content-url", "contentUrlVisibility", this);
+  });
+
 }
 
 function getMediaIndex(content)
