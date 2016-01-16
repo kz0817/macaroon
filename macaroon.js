@@ -53,7 +53,7 @@ function appendAlert(msg)
   var closeButton = $("<button>");
   closeButton.attr("class", "close");
   closeButton.attr("data-dismiss", "alert");
-  closeButton.append($('<span aria-hidden="true">×</span>'));
+  closeButton.append($('<span aria-hidden="true">&times</span>'));
 
   alertDiv.append(closeButton);
   alertDiv.append(msg);
