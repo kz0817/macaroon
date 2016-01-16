@@ -2,6 +2,7 @@ var context = {
   contents: null,
   contentsDir: "contents",
   contentsIndex: 0,
+  contentPlayTime: null,
   titleListVisibility: true,
   chapterListVisibility: true,
   contentUrlVisibility: false,
@@ -128,6 +129,20 @@ function setPlayTime(time)
   setLoadingIcon();
 }
 
+function savePlayTime()
+{
+  context.contentPlayTime = getPlayTime();
+  return context.contentPlayTime;
+}
+
+function loadSavedPlayTime()
+{
+  if (!context.contentPlayTime)
+    return;
+  setPlayTime(context.contentPlayTime);
+  context.contentPlayTime = null;
+}
+
 function setPlayerSizeLabel(label)
 {
   var s = label + ' <span class="caret"></span>'
@@ -178,8 +193,14 @@ function setCodecMenu(mediaArray)
     var media = content.media[mediaIndex];
     setCodecLabel(media.codec);
     setItemToLocalStorage(codecDescrKey(content), media.codec)
-    var currTime = getPlayTime()
+    var currTime = savePlayTime();
     loadVideo(media.url);
+
+    // Resuming the play time is performed on 'canplay' event, because
+    // setting the time here is ineffective for Firefox and Safari.
+    // Only chrome works well in that way. The following line is to prevent
+    // chrome from showing the first frame of the loaded video before
+    // the current position is resumed.
     setPlayTime(currTime);
   });
 }
@@ -264,6 +285,7 @@ function setupControlEvents()
   });
 
   $("#player").on("canplay", function() {
+    loadSavedPlayTime();
     clearLoadingIcon();
     fixupPlayButtonLabel();
   });
