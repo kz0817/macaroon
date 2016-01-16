@@ -180,7 +180,7 @@ function setCodecMenu(mediaArray)
     setItemToLocalStorage(codecDescrKey(content), media.codec)
     var currTime = getPlayTime()
     loadVideo(media.url);
-    setPlayTime(currTime)
+    setPlayTime(currTime);
   });
 }
 
