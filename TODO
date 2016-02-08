@@ -1,2 +1,3 @@
+- Select autostart (default: None)
 - Large Control button optioin for small devices such as iPhone.
 - Full screen button (realized by JavaScript)
