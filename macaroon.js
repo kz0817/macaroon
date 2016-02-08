@@ -156,12 +156,14 @@ function setPlayerSize(playerSize)
     player.css("width", "100%");
     player.css("height", "100%");
     player.css("position", "fixed");
+    $("#hide-control-button").show();
   } else {
     var size = playerSize.split("x");
     var width = Number(size[0]);
     var height = Number(size[1]);
     player.height(height).width(width);
     player.css("position", "static");
+    $("#hide-control-button").hide();
   }
   setPlayerSizeLabel(playerSize);
   setItemToLocalStorage("playerSize", playerSize);
@@ -276,7 +278,7 @@ function setupControlEvents()
     setPlayerSize(resLabel);
   });
 
-  $("#raise-player-button").click(function(event) {
+  $("#hide-control-button").click(function(event) {
     raisePlayer(true);
   });
 
