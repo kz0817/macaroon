@@ -27,6 +27,16 @@ function setItemToLocalStorage(key, value)
   localStorage.setItem(key, value);
 }
 
+function getAutoplayFlag()
+{
+  return (getItemFromLocalStorage("autoPlay") == "1")
+}
+
+function setAutoplayFlag(flag)
+{
+  setItemToLocalStorage("autoPlay", flag ? "1" : "0")
+}
+
 function codecDescrKey(content)
 {
   return "codecDescr__" + content.label;
@@ -141,6 +151,19 @@ function loadSavedPlayTime()
     return;
   setPlayTime(context.contentPlayTime);
   context.contentPlayTime = null;
+}
+
+function loadAutoplayFlag()
+{
+  var autoplay = getAutoplayFlag()
+  $("#player").prop("autoplay", autoplay)
+  if (autoplay) {
+    $("#autoplay-button").addClass("active");
+    $("#autoplay-icon").css("color", "#000000");
+  } else {
+    $("#autoplay-button").removeClass("active");
+    $("#autoplay-icon").css("color", "#a0a0a0");
+  }
 }
 
 function setPlayerSizeLabel(label)
@@ -278,6 +301,12 @@ function setupControlEvents()
     setPlayerSize(resLabel);
   });
 
+  $("#autoplay-button").click(function(event) {
+    var autoplay = getAutoplayFlag()
+    setAutoplayFlag(!autoplay)
+    loadAutoplayFlag();
+  });
+
   $("#hide-control-button").click(function(event) {
     raisePlayer(true);
   });
@@ -372,7 +401,9 @@ window.onload = function() {
   loadContentsList();
   setupControlEvents();
 
-  playerSize = getItemFromLocalStorage("playerSize");
+  loadAutoplayFlag();
+
+  var playerSize = getItemFromLocalStorage("playerSize");
   if (!playerSize)
     playerSize = "320x180";
   setPlayerSize(playerSize);
