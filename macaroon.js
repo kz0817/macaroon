@@ -395,6 +395,7 @@ function setupContentsList(contents, listUrl)
     var label = contents[i].label;
 
     var button = $("<button>");
+    contents[i].button = button;
     button.attr("type", "button");
     button.text(label);
     button.attr("class", "btn btn-default btn-lg");
@@ -412,8 +413,15 @@ function setupContentsList(contents, listUrl)
         setCodecMenu(content.media);
         setChapterList(content.chapters);
     });
-    $("#title-list").append(button);
   }
+
+  context.contents.sort(function(a, b) {
+    return a.label > b.label;
+  });
+  $("#title-list").empty();
+  context.contents.forEach(function(content) {
+    $("#title-list").append(content.button);
+  });
 }
 
 window.onload = function() {
