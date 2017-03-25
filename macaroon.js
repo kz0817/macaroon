@@ -74,9 +74,9 @@ function appendAlert(msg)
   $("#alert-region").append(alertDiv);
 }
 
-function loadContentsList(path)
+function loadContentsList(path, baseDir)
 {
-  var url = context.contentsDir + "/" + path;
+  var url = baseDir + "/" + path;
   $.getJSON(url)
   .done(function(data) {
     setupContentsList(data, url);
@@ -387,7 +387,7 @@ function setupContentsList(contents, listUrl)
   var baseDir = getBaseDir(listUrl);
   for (var i = 0; i < contents.length; i++) {
     if ("link" in contents[i]) {
-        loadContentsList(contents[i].link);
+        loadContentsList(contents[i].link, baseDir);
         continue;
     }
     contents[i].baseDir = baseDir;
@@ -417,7 +417,7 @@ function setupContentsList(contents, listUrl)
 }
 
 window.onload = function() {
-  loadContentsList("main.json");
+  loadContentsList("main.json", context.contentsDir);
   setupControlEvents();
 
   loadAutoplayFlag();
