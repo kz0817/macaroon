@@ -1,11 +1,14 @@
 var context = {
-  contents: null,
+  contents: [],
   contentsDir: "contents",
   contentsIndex: 0,
   contentPlayTime: null,
   titleListVisibility: true,
   chapterListVisibility: true,
   contentUrlVisibility: false,
+
+  // for setup
+  currIndex: 0,
 };
 
 function toSecond(timeString)
@@ -71,13 +74,12 @@ function appendAlert(msg)
   $("#alert-region").append(alertDiv);
 }
 
-function loadContentsList()
+function loadContentsList(path)
 {
-  var url = context.contentsDir + "/main.json";
+  var url = context.contentsDir + "/" + path;
   $.getJSON(url)
   .done(function(data) {
-    context.contents = data;
-    setupContentsList();
+    setupContentsList(data, url);
   })
   .fail(function(jqXHR, textStatus, errorThrown) {
     appendAlert("Failed to get '" + url + "'. " + textStatus + " : "
@@ -85,13 +87,13 @@ function loadContentsList()
   });
 }
 
-function fixupContentsUrl(url)
+function fixupContentsUrl(url, baseDir)
 {
   if (url.search("://") != -1)
     return url;
   if (url[0] == "/")
     return url;
-  return context.contentsDir + "/" + url;
+  return baseDir + "/" + url;
 }
 
 function isPlayerPaused()
@@ -117,9 +119,9 @@ function clearLoadingIcon()
   $("#play-button").prop("disabled", false);
 }
 
-function loadVideo(url)
+function loadVideo(url, baseDir)
 {
-  var fixedUrl = fixupContentsUrl(url)
+  var fixedUrl = fixupContentsUrl(url, baseDir);
   $("#content-url").text(location.href + fixedUrl);
   var player = document.getElementById("player");
   player.src = fixedUrl;
@@ -219,7 +221,7 @@ function setCodecMenu(mediaArray)
     setCodecLabel(media.codec);
     setItemToLocalStorage(codecDescrKey(content), media.codec)
     var currTime = savePlayTime();
-    loadVideo(media.url);
+    loadVideo(media.url, content.baseDir);
 
     // Resuming the play time is performed on 'canplay' event, because
     // setting the time here is ineffective for Firefox and Safari.
@@ -372,23 +374,40 @@ function getMediaIndex(content)
   return defaultIdx;
 }
 
-function setupContentsList()
+function getBaseDir(url)
 {
-  for (var i = 0; i < context.contents.length; i++) {
-    var label = context.contents[i].label;
+  var pos = url.lastIndexOf("/");
+  if (pos == -1)
+    return ""
+  return url.substring(0, pos);
+}
+
+function setupContentsList(contents, listUrl)
+{
+  var baseDir = getBaseDir(listUrl);
+  for (var i = 0; i < contents.length; i++) {
+    if ("link" in contents[i]) {
+        loadContentsList(contents[i].link);
+        continue;
+    }
+    contents[i].baseDir = baseDir;
+    context.contents.push(contents[i]);
+    var label = contents[i].label;
 
     var button = $("<button>");
     button.attr("type", "button");
     button.text(label);
     button.attr("class", "btn btn-default btn-lg");
-    button.attr("data-content-index", i);
+    button.attr("data-content-index", context.currIndex);
+    context.currIndex++;
+
     button.click(function() {
         var idx = $(this).attr("data-content-index");
         context.contentsIndex = idx;
         var content = context.contents[idx];
         var mediaIndex = getMediaIndex(content);
         var media = content.media[mediaIndex];
-        loadVideo(media.url);
+        loadVideo(media.url, content.baseDir);
         setCodecLabel(media.codec);
         setCodecMenu(content.media);
         setChapterList(content.chapters);
@@ -398,7 +417,7 @@ function setupContentsList()
 }
 
 window.onload = function() {
-  loadContentsList();
+  loadContentsList("main.json");
   setupControlEvents();
 
   loadAutoplayFlag();
