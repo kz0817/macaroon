@@ -416,11 +416,12 @@ function setupContentsList(contents, listUrl)
   }
 
   // Add and sort the titles
-  context.contents.sort(function(a, b) {
+  var ordered = [].concat(context.contents);
+  ordered.sort(function(a, b) {
     return a.label > b.label;
   });
   $("#title-list").children().detach();
-  context.contents.forEach(function(content) {
+  ordered.forEach(function(content) {
     $("#title-list").append(content.button);
   });
 }
