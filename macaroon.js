@@ -6,9 +6,6 @@ var context = {
   titleListVisibility: true,
   chapterListVisibility: true,
   contentUrlVisibility: false,
-
-  // for setup
-  currIndex: 0,
 };
 
 function toSecond(timeString)
@@ -398,8 +395,7 @@ function setupContentsList(contents, listUrl)
     button.attr("type", "button");
     button.text(label);
     button.attr("class", "btn btn-default btn-lg");
-    button.attr("data-content-index", context.currIndex);
-    context.currIndex++;
+    button.attr("data-content-index", context.contents.length-1);
 
     button.on("click", function() {
         var idx = $(this).attr("data-content-index");
